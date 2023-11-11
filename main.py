@@ -15,3 +15,9 @@ class Player:
 
     def learn(self, my_move, their_move):
         pass
+
+
+def beats(one, two):
+    return ((one == 'rock' and two == 'scissors') or
+            (one == 'scissors' and two == 'paper') or
+            (one == 'paper' and two == 'rock'))
