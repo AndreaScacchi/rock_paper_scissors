@@ -21,6 +21,7 @@ class Player:
         pass
 
 
+# this subclass returns a random choice between ['rock', 'paper, 'scissors']
 class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
