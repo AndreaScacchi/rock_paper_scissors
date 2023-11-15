@@ -37,6 +37,8 @@ class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
+        self.player1_score = 0  # initialize player 1's score to zero
+        self.player2_score = 0  # initialize player 2's score to zero
 
     def play_round(self):
         move1 = self.p1.move()
