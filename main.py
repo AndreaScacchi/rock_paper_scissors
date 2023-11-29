@@ -26,6 +26,13 @@ class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
 
+class HumanPlayer(Player):
+    def move(self):
+        human_move = input('Make a move. Chosse between Rock, Paper or Scissors: ').lower()
+        if human_move in moves:
+            return human_move
+        print('This move is invalid, try again!')
+
 
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
@@ -43,18 +50,33 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f"Player 1: {move1} Player 2: {move2}")
+        print(f'Player 1: {move1} Player 2: {move2}')
+        if beats(move1, move2):
+            print('Player 1 wins!')
+            self.player1_score += 1
+            print(f'Player 1 score = {self.player1_score}')
+            print(f'Player 2 score = {self.player2_score}')
+        elif beats(move2, move1):
+            print('Player 2 wins!')
+            self.player2_score += 1
+            print(f'Player 1 score = {self.player1_score}')
+            print(f'Player 2 score = {self.player2_score}')
+        else:
+            print('Players done the same move. It is a Tie!')
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
         print("Game start!")
-        for round in range(3):
+        for round in range(3):  
             print(f"Round {round}:")
             self.play_round()
+        print(f"Final scores:")
+        print(f"Player 1: {game.player1_score}")
+        print(f"Player 2: {game.player2_score}")
         print("Game over!")
 
 
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), RandomPlayer())
+    game = Game(HumanPlayer(), RandomPlayer())
     game.play_game()
