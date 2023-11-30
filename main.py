@@ -26,6 +26,7 @@ class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
 
+# this subclass give you the possibility to play against the computer and make your moves
 class HumanPlayer(Player):
     def move(self):
         human_move = input('Make a move. Chosse between Rock, Paper or Scissors: ').lower()
