@@ -37,14 +37,35 @@ class HumanPlayer(Player):
 
 
 class ReflectPlayer(Player):
+    def __init__(self):
+        super().__init__()
+        self.their_move = None
+    
     def move(self):
         if self.their_move is not None:
             return self.their_move
         else:
-            return random.choices(moves)
+            return random.choice(moves)
         
     def learn(self, my_move, their_move):
         self.their_move = their_move
+
+
+class CyclePlayer(Player):
+    def __init__(self):
+        super().__init__()
+        self.my_move = None
+    
+    def move(self):
+        if self.my_move is not None:
+            index = moves.index(self.my_move)
+            next_move_index = (index + 1) % len(moves)
+            return moves[next_move_index]
+        else:
+            return random.choice(moves)
+    
+    def learn(self, my_move, their_move):
+        self.my_move = my_move
 
 
 def beats(one, two):
@@ -91,5 +112,8 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), RandomPlayer())
+    game = Game(HumanPlayer(), ReflectPlayer())
     game.play_game()
+    
+    cycle_game = Game(HumanPlayer(), CyclePlayer())
+    cycle_game.play_game()
