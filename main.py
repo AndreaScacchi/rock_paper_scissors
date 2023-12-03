@@ -32,9 +32,13 @@ class RandomPlayer(Player):
 # and make your moves
 class HumanPlayer(Player):
     def move(self):
+        # the 'while' creates an infinite loop, prompting the user to enter
+        # a move repeatedly until a valid move is provided
         while True:
+            # prompt the user to input a move, converting it to lowercase
             human_move = input('Make a move.'
                                'Choose Rock, Paper or Scissors: ').lower()
+            # check if the entered move is one of the valid moves
             if human_move in moves:
                 return human_move
             print('This move is invalid, try again!')
@@ -66,7 +70,11 @@ class CyclePlayer(Player):
 
     def move(self):
         if self.my_move is not None:
+            # find the index of the player's previous move in the moves list
             index = moves.index(self.my_move)
+            # calculate the index of the next move i a cyclic manner.
+            # if the player's previous move was the last one in the list,
+            # it wraps around to the first move
             next_move_index = (index + 1) % len(moves)
             return moves[next_move_index]
         else:
@@ -117,8 +125,10 @@ class Game:
             print(f"ROUND {round}:")
             self.play_round()
 
+        # check if the score of player 1 is greater to the score of player 2
         if self.player1_score > self.player2_score:
             print("Player 1 wins the game!")
+        # check if the score of player 2 is greater to the score of player 1
         elif self.player2_score > self.player1_score:
             print("Player 2 wins the game!")
         else:
