@@ -7,7 +7,7 @@ import random
 
 
 # these are the possible moves
-moves = ['rock', 'paper', 'scissors']
+moves = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
 
 """The Player class is the parent class for all of the Players
@@ -36,12 +36,12 @@ class HumanPlayer(Player):
         # a move repeatedly until a valid move is provided
         while True:
             # prompt the user to input a move, converting it to lowercase
-            human_move = input('Make a move.'
-                               'Choose Rock, Paper or Scissors: ').lower()
+            human_move = input('\033[1;32mMake a move. '
+                               'Rock, Paper or Scissors? \033[0m').lower()
             # check if the entered move is one of the valid moves
             if human_move in moves:
                 return human_move
-            print('This move is invalid, try again!')
+            print('\033[1;31mThis move is invalid, try again!\033[0m')
 
 
 # this subclass remembers the previous move the opponent played last round and
@@ -88,7 +88,14 @@ class CyclePlayer(Player):
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
-            (one == 'paper' and two == 'rock'))
+            (one == 'paper' and two == 'rock') or
+            (one == 'rock' and two == 'lizard') or
+            (one == 'lizard' and two == 'spock') or
+            (one == 'spock' and two == 'scissors') or
+            (one == 'scissors' and two == 'lizard') or
+            (one == 'lizard' and two == 'paper') or
+            (one == 'paper' and two == 'spock') or
+            (one == 'spock' and two == 'rock'))
 
 
 # this class starts the game. The play_round method simulates a single round
@@ -103,41 +110,41 @@ class Game:
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f'Player 1: {move1} Player 2: {move2}')
-        if beats(move1, move2):
-            print('Player 1 wins the round!')
+        print(f'\033[1;34mPlayer 1: {move1} - Player 2: {move2}\033[0m')
+        if move1 == move2:
+            print('\033[1;35mPlayers made the same move. It is a Tie!\033[0m')
+        elif beats(move1, move2):
+            print('\033[1;36mPlayer 1 wins the round!\033[0m')
             self.player1_score += 1
-            print(f'Player 1 score = {self.player1_score}')
-            print(f'Player 2 score = {self.player2_score}')
-        elif beats(move2, move1):
-            print('Player 2 wins the round!')
-            self.player2_score += 1
-            print(f'Player 1 score = {self.player1_score}')
-            print(f'Player 2 score = {self.player2_score}')
+            print(f'\033[1;36mPlayer 1 score = {self.player1_score}\033[0m')
+            print(f'\033[1;33mPlayer 2 score = {self.player2_score}\033[0m')
         else:
-            print('Players done the same move. It is a Tie!')
+            print('\033[1;33mPlayer 2 wins the round!\033[0m')
+            self.player2_score += 1
+            print(f'\033[1;36mPlayer 1 score = {self.player1_score}\033[0m')
+            print(f'\033[1;33mPlayer 2 score = {self.player2_score}\033[0m')
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
     def play_game(self):
-        print("GAME START!")
+        print('\033[1;37mGAME START!\033[0m')
         for round in range(3):
-            print(f"ROUND {round}:")
+            print(f'\033[1;30mROUND {round}:\033[0m')
             self.play_round()
 
         # check if the score of player 1 is greater to the score of player 2
         if self.player1_score > self.player2_score:
-            print("Player 1 wins the game!")
+            print('\033[1;36mPlayer 1 wins the game!\033[0m')
         # check if the score of player 2 is greater to the score of player 1
         elif self.player2_score > self.player1_score:
-            print("Player 2 wins the game!")
+            print('\033[1;33mPlayer 2 wins the game!\033[0m')
         else:
-            print("It's a tie game!")
+            print('\033[1;35mIt is a tie game!\033[0m')
 
-        print(f"FINAL SCORES:")
-        print(f"PLAYER 1: {game.player1_score}")
-        print(f"PLAYER 2: {game.player2_score}")
-        print("GAME OVER!")
+        print(f'\033[1;32mFINAL SCORES:\033[0m')
+        print(f'\033[1;36mPLAYER 1: {game.player1_score}\033[0m')
+        print(f'\033[1;33mPLAYER 2: {game.player2_score}\033[0m')
+        print('\033[1;37mGAME OVER!\033[0m')
 
 
 # this code allows to test and observe how differnt player strategies
