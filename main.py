@@ -26,6 +26,7 @@ class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
 
+
 # this subclass give you the possibility to play against the computer and make your moves
 class HumanPlayer(Player):
     def move(self):
@@ -33,6 +34,22 @@ class HumanPlayer(Player):
         if human_move in moves:
             return human_move
         print('This move is invalid, try again!')
+
+
+class ReflectPlayer(Player):
+    def move(self):
+        opponent_move = random.choice(moves)
+        # check if there is an opponent move stored
+        if opponent_move != None:
+            # return the stored opponent's move
+            return opponent_move
+        else:
+            # play a random move since it is the first round
+            random_move = random.choice(moves)
+            return random_move
+        
+    def learn(self, my_move, their_move):
+        self.their_move = their_move
 
 
 def beats(one, two):
