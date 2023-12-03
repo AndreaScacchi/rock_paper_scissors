@@ -38,15 +38,10 @@ class HumanPlayer(Player):
 
 class ReflectPlayer(Player):
     def move(self):
-        opponent_move = random.choice(moves)
-        # check if there is an opponent move stored
-        if opponent_move != None:
-            # return the stored opponent's move
-            return opponent_move
+        if self.their_move is not None:
+            return self.their_move
         else:
-            # play a random move since it is the first round
-            random_move = random.choice(moves)
-            return random_move
+            return random.choices(moves)
         
     def learn(self, my_move, their_move):
         self.their_move = their_move
