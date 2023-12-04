@@ -163,3 +163,9 @@ if __name__ == '__main__':
 
     cycle_game = Game(HumanPlayer(), CyclePlayer())
     cycle_game.play_game()
+    
+    cycle_game = Game(HumanPlayer(), RandomPlayer())
+    cycle_game.play_game()
+    
+    cycle_game = Game(HumanPlayer(), AllRockPlayer())
+    cycle_game.play_game()
