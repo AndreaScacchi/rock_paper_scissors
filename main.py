@@ -22,6 +22,11 @@ class Player:
         pass
 
 
+# a subclass thay always plays rock
+class AllRockPlayer(Player):
+    pass
+
+
 # this subclass returns a random choice between
 # ['rock', 'paper, 'scissors', 'spock', 'lizard']
 class RandomPlayer(Player):
@@ -37,8 +42,8 @@ class HumanPlayer(Player):
         # a move repeatedly until a valid move is provided
         while True:
             # prompt the user to input a move, converting it to lowercase
-            human_move = input('\033[1;32mMake a move. '
-                               'Rock, Paper or Scissors? \033[0m').lower()
+            human_move = input('\033[1;32mMake a move. Rock, Paper '
+                               'Scissors, Spock or Lizard? \033[0m').lower()
             # check if the entered move is one of the valid moves
             if human_move in moves:
                 return human_move
@@ -86,17 +91,19 @@ class CyclePlayer(Player):
 
 
 # this function tells whether one move beats another one
+# it employs a dictionary to map each choice to a list of options it can defeat
+# the get method retieves the list corresponding to the first argument(one)
+# from the dictionary, and if one is not a key in the dictionary,
+# it returns an empty list. The function then checks if the second
+# argument(two) exists in this list and returns a Boolean result accordingly
 def beats(one, two):
-    return ((one == 'rock' and two == 'scissors') or
-            (one == 'scissors' and two == 'paper') or
-            (one == 'paper' and two == 'rock') or
-            (one == 'rock' and two == 'lizard') or
-            (one == 'lizard' and two == 'spock') or
-            (one == 'spock' and two == 'scissors') or
-            (one == 'scissors' and two == 'lizard') or
-            (one == 'lizard' and two == 'paper') or
-            (one == 'paper' and two == 'spock') or
-            (one == 'spock' and two == 'rock'))
+    return two in {
+        'rock': ['scissors', 'lizard'],
+        'scissors': ['paper', 'lizard'],
+        'paper': ['rock', 'spock'],
+        'spock': ['scissors', 'rock'],
+        'lizard': ['spock', 'paper']
+    }.get(one, [])
 
 
 # this class starts the game. The play_round method simulates a single round
