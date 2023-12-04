@@ -158,14 +158,17 @@ class Game:
 # this code allows to test and observe how differnt player strategies
 # interact with a human player in the game.
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), ReflectPlayer())
+    opponents = {
+        '1': AllRockPlayer,
+        '2': RandomPlayer,
+        '3': ReflectPlayer,
+        '4': CyclePlayer,
+        '5': HumanPlayer
+    }
+    print("Player list:")
+    for key, value in opponents.items():
+        print(f"{key}. {value.__name__}")
+    p1 = opponents[input(f"Choose player 1: ")]
+    p2 = opponents[input(f"Choose player 2: ")]
+    game = Game(p1(), p2())
     game.play_game()
-
-    cycle_game = Game(HumanPlayer(), CyclePlayer())
-    cycle_game.play_game()
-    
-    cycle_game = Game(HumanPlayer(), RandomPlayer())
-    cycle_game.play_game()
-    
-    cycle_game = Game(HumanPlayer(), AllRockPlayer())
-    cycle_game.play_game()
