@@ -168,7 +168,25 @@ if __name__ == '__main__':
     print("Player list:")
     for key, value in opponents.items():
         print(f"{key}. {value.__name__}")
-    p1 = opponents[input(f"Choose player 1: ")]
-    p2 = opponents[input(f"Choose player 2: ")]
+
+    # prompt the user to choose the player 1
+    while True:
+        choice_p1 = input("Choose player 1(enter the corresponding number): ")
+        if choice_p1 in opponents:
+            p1 = opponents[choice_p1]
+            break
+        else:
+            print("Invalid input. Please enter a valid number.")
+
+    # prompt the user to choose the player 2
+    while True:
+        choice_p2 = input("Choose player 2(enter the corresponding number): ")
+        if choice_p2 in opponents:
+            p2 = opponents[choice_p2]
+            break
+        else:
+            print("Invalid input. Please enter a valid number.")
+
+    # create instances of chosen players and start the game
     game = Game(p1(), p2())
     game.play_game()
